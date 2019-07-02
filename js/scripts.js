@@ -1,10 +1,10 @@
-function UserDetails(name, initialDeposit) {
-  this.name = name
-  this.initialDeposit = initialDeposit
+function Account(name, balance) {
+  this.name = name;
+  this.balance = balance;
 };
 
-UserDetails.prototype.Adjust = function () {
-  return this.currentBalance += (this.newDeposit - this.newWithdrawal);
+Account.prototype.Adjust = function () {
+  return this.balance += (this.newDeposit - this.newWithdrawal);
 };
 
 function resetFields() {
@@ -12,19 +12,32 @@ function resetFields() {
   $("#new-withdrawal").val("");
 };
 
-var myUserDetails = new UserDetails();
-
 $(document).ready(function() {
-    $("form#register").submit(function(event) {
-            // debugger
-      event.preventDefault();
-      var initialDeposit = $("input#initial-deposit").val();
-      var currentBalance = initialDeposit
+  $("form#new-client").submit(function() {
+    event.preventDefault();
 
-      $("#currentBalance").text(currentBalance);
+    var inputtedName = $("#new-name").val();
+    var initialDeposit = parseInt($("#initial-deposit").val());
+    initialDeposit = initialDeposit || 0
+    var userAccount = new Account(inputtedName, initialDeposit);
+    $("#new-client").hide();
+    $("#transactions").show();
+  })
+})
 
+// $(document).ready(function() {
+//     $("form#register").submit(function(event) {
+//             // debugger
+//       event.preventDefault();
+//       var initialDeposit = $("input#initial-deposit").val();
+//       var currentBalance = initialDeposit
+//
+//       $("#currentBalance").text(currentBalance);
+//
       console.log(initialDeposit)
-    })
+//     })
+$("form#account-update").submit(function() {
+  event.preventDefault();
 
       var deposit = parsInt($("#new-deposit").val());
       var withdrawal = parseInt($("#new-withdrawal").val());
